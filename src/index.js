@@ -3,7 +3,8 @@ const express = require('express'),
     cors = require('cors'),
     swaggerUi = require('swagger-ui-express'),
     YAML = require('yamljs'),
-    
+    logger = require('./config/logger'),
+    config = require('./config/config'),
     routes = require('./app/routes/routes');
 
 const specs = YAML.load("src/config/swagger.yml");
@@ -14,6 +15,6 @@ const app = express()
     .use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 routes(app);
-app.listen(3033, () => {
-    console.log(`URLShortener running on port 3033`);
+app.listen(config.PORT, () => {
+    logger.info(`URLShortener running on port ${config.PORT}`);
 });

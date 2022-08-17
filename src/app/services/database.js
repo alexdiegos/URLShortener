@@ -1,22 +1,22 @@
 /**
  *  @Module Database
  */
-
-const { ShortURL } = require("../models/ShortURL");
 const mysql = require('mysql');
+const config = require('../../config/config');
+const logger = require('../../config/logger');
 
 const connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'urlshortenerUsr',
-    password : '358nCQ5ltZb0%ABwuI2o',
-    database : 'urlshortenerdb'
+    host     : config.DB_HOST,
+    user     : config.DB_USER,
+    password : config.DB_PASS,
+    database : config.DB_NAME
 });
 
 connection.connect((err, conn) => {
   if(!err) {
-    console.log("Connected to MySql!");
+    logger.info("Connected to MySql!");
   } else {
-    console.log(err);
+    logger.error(err);
   }
 });
 

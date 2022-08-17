@@ -1,5 +1,5 @@
 const database = require('./services/database');
-const ShortURL = require('./models/ShortURL');
+const logger = require('../config/logger');
 
 /**
  * @Module Controller
@@ -118,8 +118,7 @@ function insertURL(req, res) {
                 id = maxId + 1;
             }
             shortenUrl = shortenUrl + id + randomId;
-            const shortUrl = new ShortURL(id, url, shortenUrl, null);
-            database.insertUrl(shortUrl, (error, result) => {
+            database.insertUrl({'url': url, 'shortUrl': shortenUrl}, (error, result) => {
                 if(!error) {
                     database.selectUrlById(result.insertId, queryCallback(res, true, false));
                 }
