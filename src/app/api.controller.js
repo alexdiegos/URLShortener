@@ -114,7 +114,7 @@ function insertURL(req, res) {
 
     database.selectMaxId(
         (error, rows, fields, result) => {
-            if (rows.length == 1) {
+            if (rows && rows.length == 1) {
                 const {maxId} = rows[0];
                 id = maxId + 1;
             }
@@ -122,6 +122,8 @@ function insertURL(req, res) {
             database.insertUrl({'url': url, 'shortUrl': shortenUrl}, (error, result) => {
                 if(!error) {
                     database.selectUrlById(result.insertId, queryCallback(res, true, false));
+                } else {
+                    logger.error(error);
                 }
             });
         });
