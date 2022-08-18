@@ -4,8 +4,8 @@ require('dotenv').config({
 
 module.exports = {
     PORT: process.env.PORT || 8080,
-    DB_HOST: process.env.DB_HOST || 'urlshortenerdb.cdueplnz1rp4.us-east-1.rds.amazonaws.com',
-    DB_USER: process.env.DB_USER || 'urlshortenerUsr',
-    DB_PASS: process.env.DB_PASS || '358nCQ5ltZb0%ABwuI2o',
-    DB_NAME: process.env.DB_NAME || 'urlshortenerdb',
+    DB_HOST: process.env.DB_HOST || 'host',
+    DB_USER: process.env.DB_USER || 'user',
+    DB_PASS: process.env.DB_PASS || 'pass',
+    DB_NAME: process.env.DB_NAME || 'dbname',
 }

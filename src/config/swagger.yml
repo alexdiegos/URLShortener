@@ -28,16 +28,7 @@ paths:
           content:
             application/json:
               schema:
-                type: Object
-                properties:
-                  id:
-                    type: number
-                  url:
-                    type: string
-                  shortUrl:
-                    type: string
-                  createDate:
-                    type: Date
+                $ref: '#/components/schemas/URLShortener'
               example:
                 id: 1
                 url: "https://www.google.com/search?q=eur+to+brl&sxsrf=ALiCzsZykA5ECQFYYY98ewLizy1LE1XbxA%3A1660528493441&ei=baf5YqbBGtDs1sQPk6G94AM&ved=0ahUKEwjmq_bX3sf5AhVQtpUCHZNQDzwQ4dUDCA8&uact=5&oq=eur+to+brl&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMQCMgUIABCABDIECAAQQzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEB4QBzIGCAAQHhAHMgYIABAeEAc6BwgAEEcQsAM6BwgAELADEEM6CAgAEB4QBxAKSgQIQRgASgQIRhgAUIoHWJ0KYI8NaAJwAXgAgAG_AYgBtQSSAQMwLjOYAQCgAQHIAQrAAQE&sclient=gws-wiz"
@@ -65,3 +56,117 @@ paths:
                     type: string
               example:
                 message: "Nenhuma URL encontrada para os parâmetros especificados!"
+  /search:
+    post:
+      tags:
+        - search
+      summary: "Retorna uma url encurtada com base em um id ou encurtamento da URL, ou a lista de URL's de uma data específica"
+      requestBody:
+        description: Preencher ao menos um dos campos do body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchURLShortener'
+
+      responses:
+        200:
+          description: Requisição realizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/URLShortener'
+              example:
+                id: 1
+                url: "https://www.google.com/search?q=eur+to+brl&sxsrf=ALiCzsZykA5ECQFYYY98ewLizy1LE1XbxA%3A1660528493441&ei=baf5YqbBGtDs1sQPk6G94AM&ved=0ahUKEwjmq_bX3sf5AhVQtpUCHZNQDzwQ4dUDCA8&uact=5&oq=eur+to+brl&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMQCMgUIABCABDIECAAQQzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEB4QBzIGCAAQHhAHMgYIABAeEAc6BwgAEEcQsAM6BwgAELADEEM6CAgAEB4QBxAKSgQIQRgASgQIRhgAUIoHWJ0KYI8NaAJwAXgAgAG_AYgBtQSSAQMwLjOYAQCgAQHIAQrAAQE&sclient=gws-wiz"
+                shortUrl: http://localhost:3033/url-e/93Ub58Y
+                createDate: "2022-08-15T21:07:03.000Z"
+        400:
+          description: Requisição não realizada - Parâmetros ausentes
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Informe o id da URL, a URL encurtada ou uma data para busca."
+        404:
+          description: Requisição realizada - Sem retorno
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Nenhuma URL encontrada para os parâmetros especificados!"
+  /shorter:
+    post:
+      tags:
+        - insert
+      summary: "Retorna uma url encurtada e persiste no banco de dados"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: Object
+              properties:
+                url:
+                  type: string
+              example:
+                url: "https://www.google.com/search?q=eur+to+brl&sxsrf=ALiCzsZykA5ECQFYYY98ewLizy1LE1XbxA%3A1660528493441&ei=baf5YqbBGtDs1sQPk6G94AM&ved=0ahUKEwjmq_bX3sf5AhVQtpUCHZNQDzwQ4dUDCA8&uact=5&oq=eur+to+brl&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMQCMgUIABCABDIECAAQQzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEB4QBzIGCAAQHhAHMgYIABAeEAc6BwgAEEcQsAM6BwgAELADEEM6CAgAEB4QBxAKSgQIQRgASgQIRhgAUIoHWJ0KYI8NaAJwAXgAgAG_AYgBtQSSAQMwLjOYAQCgAQHIAQrAAQE&sclient=gws-wiz"
+
+      responses:
+        200:
+          description: Requisição realizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/URLShortener'
+              example:
+                id: 1
+                url: "https://www.google.com/search?q=eur+to+brl&sxsrf=ALiCzsZykA5ECQFYYY98ewLizy1LE1XbxA%3A1660528493441&ei=baf5YqbBGtDs1sQPk6G94AM&ved=0ahUKEwjmq_bX3sf5AhVQtpUCHZNQDzwQ4dUDCA8&uact=5&oq=eur+to+brl&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMQCMgUIABCABDIECAAQQzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEB4QBzIGCAAQHhAHMgYIABAeEAc6BwgAEEcQsAM6BwgAELADEEM6CAgAEB4QBxAKSgQIQRgASgQIRhgAUIoHWJ0KYI8NaAJwAXgAgAG_AYgBtQSSAQMwLjOYAQCgAQHIAQrAAQE&sclient=gws-wiz"
+                shortUrl: http://localhost:3033/url-e/93Ub58Y
+                createDate: "2022-08-15T21:07:03.000Z"
+        404:
+          description: Requisição realizada - Sem retorno
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Não foi possível realizar o encurtamento da URL!"
+
+components:
+  schemas:
+    URLShortener:
+      type: Object
+      properties:
+        id:
+          type: number
+        url:
+          type: string
+        shortUrl:
+          type: string
+        createDate:
+          type: Date
+    SearchURLShortener:
+      type: Object
+      properties:
+        urlId:
+          type: number
+        shortUrl:
+          type: string
+        date:
+          type: string
+      example:
+        urlId: 8
+        shortUrl: 8J6fb9p
+        date: 10-08-2022

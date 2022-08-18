@@ -50,8 +50,8 @@ const queryCallback = function(resp, oneValue, redirect){
  * @param {Express.Response} res 
  * @returns {ShortURL}
  */
-function getURLById(req, res) {
-    let urlId = req.params.urlId;
+function getURLById(req, res, urlIdReq) {
+    let urlId = urlIdReq || req.params.urlId;
 
     if(urlId && !Number.isNaN(urlId)) {
         database.selectUrlById(Number.parseInt(urlId), queryCallback(res, true, false));
@@ -94,6 +94,7 @@ function getURLById(req, res) {
     const {shortUrl} = req.body;
 
     let shortenUrl = req.protocol + '://' + req.get('host') + '/url-e/' + shortUrl;
+    logger.info(shortenUrl);
     database.selectUrlsByShortUrl(shortenUrl, queryCallback(res, true, false));
     return;
 }
