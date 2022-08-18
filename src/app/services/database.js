@@ -9,7 +9,8 @@ const connection = mysql.createConnection({
     host     : config.DB_HOST,
     user     : config.DB_USER,
     password : config.DB_PASS,
-    database : config.DB_NAME
+    database : config.DB_NAME,
+    insecureAuth: true
 });
 
 connection.connect((err, conn) => {
