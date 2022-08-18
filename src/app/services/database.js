@@ -1,7 +1,7 @@
 /**
  *  @Module Database
  */
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const config = require('../../config/config');
 const logger = require('../../config/logger');
 
@@ -9,14 +9,14 @@ const connection = mysql.createConnection({
     host     : config.DB_HOST,
     user     : config.DB_USER,
     password : config.DB_PASS,
-    database : config.DB_NAME,
-    insecureAuth: true
+    database : config.DB_NAME
 });
 
 connection.connect((err, conn) => {
   if(!err) {
     logger.info("Connected to MySql!");
   } else {
+    console.log(err);
     logger.error(err);
   }
 });
